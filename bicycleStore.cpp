@@ -664,11 +664,54 @@ void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employe
     }
 }
 
+double calculateAverageRating(const vector<Review>& reviews) {
+    if (reviews.empty()) {
+        cout << "No reviews available." << endl;
+        return 0.0;
+    }
+
+    double totalRating = 0.0;
+    for (const auto& review : reviews) {
+        totalRating += review.getRating();
+    }
+    return totalRating / reviews.size();
+}
+
+double totalBudget(const vector<Buyer>& buyers) {
+    double total = 0.0;
+
+    for (const auto& buyer : buyers) {
+        total += buyer.getBudget();
+    }
+    return total;
+}
+
+void printBuyersByProduct(const string& product, const vector<Buyer>& buyers, const vector<Review>& reviews) {
+    bool found = false;
+
+    cout << "Buyers of " << product << ":\n" << endl;
+
+    for (const auto& buyer : buyers) {
+        if (buyer.getProduct() == product) {
+            buyer.printBuyer();
+            for (const auto& review : reviews) {
+                if (review.getProduct()->getName() == product && review.getBuyer()->getName() == buyer.getName()) {
+                    cout << "Review: " << review.getText() << endl;
+                    break;
+                }
+            }
+            cout << endl;
+            found = true;
+        }
+    }
+    if (!found) cout << "No buyers found for " << product << endl;
+}
+
 void interface(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle> bicycles, vector<Review> reviews) {
     while (true) {
         int a;
-        string fileName;
-        cout << "Choose the Function:\n" << endl;
+
+        cout << "\nChoose the Function:\n" << endl;
         cout << "1. Print Details" << endl;
         cout << "2. Add Element" << endl;
         cout << "3. Remove Element" << endl;
@@ -681,8 +724,11 @@ void interface(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle>
         case 1:
             employeesDetails(employees);
             buyesDetails(buyers);
+            cout << "Total budget of all buyers: " << totalBudget(buyers) << "$\n" << endl;
             bicycleDetalis(bicycles);
+            printBuyersByProduct("Mountain Bike", buyers, reviews);
             reviewsDetails(reviews);
+            cout << "Average bicycle rating: " << calculateAverageRating(reviews) << endl;
             break;
         case 2:
             addElements(buyers, employees, bicycles, reviews);
@@ -707,6 +753,7 @@ void interface(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle>
 }
 
 int main(int argc, const char* argv[]) {
+
     vector<Buyer> buyers = {
         Buyer("Alice", "Smith", 25, "Bicycle Red", 1000),
         Buyer("Bob", "Johnson", 40, "Mountain Bike", 2000)
@@ -717,12 +764,14 @@ int main(int argc, const char* argv[]) {
     };
 
     vector<Bicycle> bicycles = {
-        Bicycle("Stels", "Quantum", 20, 7, "Blue", 550, 2024)
+        Bicycle("Stels", "Quantum", 20, 7, "Blue", 550, 2024),
+        Bicycle("Dew", "Mountain Bike", 23, 4.5, "Yellow", 690, 2023)
     };
 
     vector<Review> reviews = { 
         Review (bicycles[0], buyers[0], 8.5, "Great bicycle, smooth ride!"),
-        Review (bicycles[0], buyers[1], 9.0, "Excellent bike, sturdy build!")
+        Review (bicycles[0], buyers[1], 9.0, "Excellent bike, sturdy build!"),
+        Review (bicycles[1], buyers[1], 9.2, "Fantastic bike for off-road adventures!")
     };
 
     interface(buyers, employees, bicycles, reviews);
