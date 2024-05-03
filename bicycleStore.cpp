@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -147,14 +147,20 @@ public:
 
 class Employee : public Person {
 private:
+    string post;
     string store;
     double salary;
 public:
     virtual ~Employee() {}
 
-    Employee(const string name, const string surname, const int age, const string store, const double salary) : Person(name, surname, age) {
+    Employee(const string name, const string surname, const int age, const string post, const string store, const double salary) : Person(name, surname, age) {
+        this->post = post;
         this->store = store;
         this->salary = salary;
+    }
+    
+    string getPost() const {
+        return post;
     }
 
     string getStore() const {
@@ -167,6 +173,7 @@ public:
 
     virtual void printEmployee() const {
         printPerson();
+        cout << "Post: " << post << endl;
         cout << "Store: " << store << endl;
         cout << "Salary: " << salary << endl;
     }
@@ -252,7 +259,7 @@ void addBuyer(vector<Buyer>& buyers) {
 }
 
 void addEmployee(vector<Employee>& employees) {
-    string name, surname, store;
+    string name, surname, post, store;
     int age;
     double salary;
 
@@ -263,12 +270,14 @@ void addEmployee(vector<Employee>& employees) {
     cin >> surname;
     cout << "Age: ";
     cin >> age;
+    cout << "Post: ";
+    cin >> post;
     cout << "Store: ";
     cin >> store;
     cout << "Salary: ";
     cin >> salary;
 
-    employees.emplace_back(name, surname, age, store, salary);
+    employees.emplace_back(name, surname, age, post, store, salary);
 }
 
 void bicycleDetalis(const vector<Bicycle> bicycles) {
@@ -377,7 +386,7 @@ void modifyEmployee(vector<Employee>& employees) {
     cin >> index;
 
     if (index >= 0 && index < employees.size()) {
-        string name, surname, store;
+        string name, surname, post, store;
         int age;
         double salary;
 
@@ -388,12 +397,14 @@ void modifyEmployee(vector<Employee>& employees) {
         cin >> surname;
         cout << "Age: ";
         cin >> age;
+        cout << "Post: ";
+        cin >> post;
         cout << "Store: ";
         cin >> store;
         cout << "Salary: ";
         cin >> salary;
 
-        employees[index] = Employee(name, surname, age, store, salary);
+        employees[index] = Employee(name, surname, age, post, store, salary);
         cout << "\nEmployee modified successfully.\n" << endl;
     }
     else cout << "\nInvalid index.\n" << endl;
@@ -500,11 +511,10 @@ void removeReview(vector<Review>& reviews) {
 void addElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle> bicycles, vector<Review> reviews) {
     while (true) {
         int a;
-        cout << "\nChoose the Vector:\n" << endl;
-        cout << "1. Employees" << endl;
-        cout << "2. Buyers" << endl;
-        cout << "3. Bicycles" << endl;
-        cout << "4. Reviews" << endl;
+        cout << "1. Hire an Employee" << endl;
+        cout << "2. Add new Buyer" << endl;
+        cout << "3. Order a Bicycle" << endl;
+        cout << "4. Add new Reviews" << endl;
         cout << "0. Back\n" << endl;
         cin >> a;
         switch (a) {
@@ -533,11 +543,10 @@ void addElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycl
 void editElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle> bicycles, vector<Review> reviews) {
     while (true) {
         int a;
-        cout << "\nChoose the Vector:\n" << endl;
-        cout << "1. Employees" << endl;
-        cout << "2. Buyers" << endl;
-        cout << "3. Bicycles" << endl;
-        cout << "4. Reviews" << endl;
+        cout << "1. Edit Employee's info" << endl;
+        cout << "2. Edit Buyer's info" << endl;
+        cout << "3. Edit Bicycle's info" << endl;
+        cout << "4. Edit Review" << endl;
         cout << "0. Back\n" << endl;
         cin >> a;
         switch (a) {
@@ -566,11 +575,10 @@ void editElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bicyc
 void removeElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle> bicycles, vector<Review> reviews) {
     while (true) {
         int a;
-        cout << "\nChoose the Vector:\n" << endl;
-        cout << "1. Employees" << endl;
-        cout << "2. Buyers" << endl;
-        cout << "3. Bicycles" << endl;
-        cout << "4. Reviews" << endl;
+        cout << "1. Fire Employee" << endl;
+        cout << "2. Delete Buyer" << endl;
+        cout << "3. Sale Bicycle" << endl;
+        cout << "4. Delete Review" << endl;
         cout << "0. Back\n" << endl;
         cin >> a;
         switch (a) {
@@ -598,11 +606,10 @@ void removeElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bic
 
 void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employees, const vector<Bicycle>& bicycles) {
     int choice;
-    cout << "\nChoose the Vector to search in:\n" << endl;
-    cout << "1. Employees" << endl;
-    cout << "2. Buyers" << endl;
-    cout << "3. Bicycles" << endl;
-    cout << "4. Reviews" << endl;
+    cout << "1. Find an Employee" << endl;
+    cout << "2. Find a Buyer" << endl;
+    cout << "3. Find a Bicycle" << endl;
+    cout << "4. Find a Review" << endl;
     cout << "0. Back\n" << endl;
     cin >> choice;
 
@@ -618,8 +625,8 @@ void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employe
                 employee.printEmployee();
                 cout << endl;
             }
+            //            AAAAAAAAAAAA!!!!!!!!!!!!
             else cout << "\nNo matching employees.\n" << endl;
-            break;
         }
         break;
     }
@@ -634,8 +641,8 @@ void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employe
                 buyer.printBuyer();
                 cout << endl;
             }
+            //            AAAAAAAAAAAA!!!!!!!!!!!!
             else cout << "\nNo matching buyers.\n" << endl;
-            break;
         }
         break;
     }
@@ -650,8 +657,8 @@ void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employe
                 bicycle.printBicycle();
                 cout << endl;
             }
+            //            AAAAAAAAAAAA!!!!!!!!!!!!
             else cout << "\nNo matching bicycles.\n" << endl;
-            break;
         }
         break;
     }
@@ -712,11 +719,11 @@ void interface(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle>
         int a;
 
         cout << "\nChoose the Function:\n" << endl;
-        cout << "1. Print Details" << endl;
-        cout << "2. Add Element" << endl;
-        cout << "3. Remove Element" << endl;
-        cout << "4. Edit Element" << endl;
-        cout << "5. Search by Element" << endl;
+        cout << "1. Show a summary of the Store" << endl;
+        cout << "2. Add info to the Store" << endl;
+        cout << "3. Delete store Element" << endl;
+        cout << "4. Edit Sore info" << endl;
+        cout << "5. Search in Store" << endl;
         cout << "0. Exit\n" << endl;
         cin >> a;
 
@@ -753,6 +760,7 @@ void interface(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycle>
 }
 
 int main(int argc, const char* argv[]) {
+    cout << "Wellcome to the BiStore!" << endl;
 
     vector<Buyer> buyers = {
         Buyer("Alice", "Smith", 25, "Bicycle Red", 1000),
@@ -760,7 +768,8 @@ int main(int argc, const char* argv[]) {
     };
 
     vector<Employee> employees = {
-        Employee("John", "Doe", 30, "Alt Store", 50000)
+        Employee("John", "Doe", 30, "Manager", "Alt Store", 50000),
+        Employee("Maria", "Romanova", 27, "Cashier", "Center Store", 18000)
     };
 
     vector<Bicycle> bicycles = {
@@ -768,7 +777,7 @@ int main(int argc, const char* argv[]) {
         Bicycle("Dew", "Mountain Bike", 23, 4.5, "Yellow", 690, 2023)
     };
 
-    vector<Review> reviews = { 
+    vector<Review> reviews = {
         Review (bicycles[0], buyers[0], 8.5, "Great bicycle, smooth ride!"),
         Review (bicycles[0], buyers[1], 9.0, "Excellent bike, sturdy build!"),
         Review (bicycles[1], buyers[1], 9.2, "Fantastic bike for off-road adventures!")
@@ -777,3 +786,4 @@ int main(int argc, const char* argv[]) {
     interface(buyers, employees, bicycles, reviews);
     return 0;
 }
+ 
