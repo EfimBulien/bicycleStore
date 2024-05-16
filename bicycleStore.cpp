@@ -514,7 +514,6 @@ void addElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycl
         cout << "1. Hire an Employee" << endl;
         cout << "2. Add new Buyer" << endl;
         cout << "3. Order a Bicycle" << endl;
-        cout << "4. Add new Reviews" << endl;
         cout << "0. Back\n" << endl;
         cin >> a;
         switch (a) {
@@ -526,9 +525,6 @@ void addElements(vector<Buyer> buyers, vector<Employee> employees, vector<Bicycl
             break;
         case 3:
             addBicycle(bicycles);
-            break;
-        case 4:
-            
             break;
         case 0:
             cout << "\nReturn to Main Menu...\n" << endl;
@@ -625,7 +621,6 @@ void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employe
                 employee.printEmployee();
                 cout << endl;
             }
-            //            AAAAAAAAAAAA!!!!!!!!!!!!
             else cout << "\nNo matching employees.\n" << endl;
         }
         break;
@@ -641,7 +636,6 @@ void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employe
                 buyer.printBuyer();
                 cout << endl;
             }
-            //            AAAAAAAAAAAA!!!!!!!!!!!!
             else cout << "\nNo matching buyers.\n" << endl;
         }
         break;
@@ -657,7 +651,6 @@ void searchElements(const vector<Buyer>& buyers, const vector<Employee>& employe
                 bicycle.printBicycle();
                 cout << endl;
             }
-            //            AAAAAAAAAAAA!!!!!!!!!!!!
             else cout << "\nNo matching bicycles.\n" << endl;
         }
         break;
